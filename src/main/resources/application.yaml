@@ -5,6 +5,21 @@ spring:
   config:
     import: "optional:file:.env[.properties]"
 
+  datasource:
+    url: jdbc:h2:mem:oauth
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+
+  h2:
+    console:
+      enabled: true
+
   security:
     oauth2:
       client:
