@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.jspecify.annotations.Nullable;
 
 @Getter
 @Entity
@@ -22,21 +23,21 @@ public class Member {
     @Column(nullable = false)
     private String providerId;
 
-    @Column(nullable = false)
+    @Nullable
     private String email;
 
     @Column(nullable = false)
-    private String name;
+    private String nickname;
 
     public Member(
             AuthProvider provider,
             String providerId,
-            String email,
+            @Nullable String email,
             String name
     ) {
         this.provider = provider;
         this.providerId = providerId;
         this.email = email;
-        this.name = name;
+        this.nickname = name;
     }
 }
