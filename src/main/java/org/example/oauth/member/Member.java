@@ -33,11 +33,11 @@ public class Member {
             AuthProvider provider,
             String providerId,
             @Nullable String email,
-            String name
+            String nickname
     ) {
         this.provider = provider;
         this.providerId = providerId;
         this.email = email;
-        this.nickname = name;
+        this.nickname = nickname;
     }
 }
