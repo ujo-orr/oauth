@@ -25,10 +25,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
 
-        String registrationId = oAuth2UserRequest.getClientRegistration().getRegistrationId();
+        String registrationId =
+                oAuth2UserRequest.getClientRegistration().getRegistrationId();
 
         if("kakao".equals(registrationId)){
             saveKakaoMember(oAuth2User);
+        } else if("naver".equals(registrationId)){
+            saveNaverMember(oAuth2User);
         }
         return oAuth2User;
     }
@@ -49,6 +52,23 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         memberService.findOrCreate(
                 AuthProvider.KAKAO,
+                providerId,
+                null,
+                nickname
+        );
+    }
+
+    private void saveNaverMember(OAuth2User oAuth2User) {
+
+        Map<String, Object> attributes = oAuth2User.getAttributes();
+
+        Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+
+        String providerId = (String) response.get("id");
+        String nickname = (String) response.get("name");
+
+        memberService.findOrCreate(
+                AuthProvider.NAVER,
                 providerId,
                 null,
                 nickname
