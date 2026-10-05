@@ -1,6 +1,7 @@
 package org.example.oauth.config;
 
 import lombok.RequiredArgsConstructor;
+import org.example.oauth.oauth.CustomOAuth2UserService;
 import org.example.oauth.oauth.CustomOidcUserService;
 import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -12,9 +13,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final CustomOidcUserService customOidcUserService;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
 
         http
                 .authorizeHttpRequests(
@@ -31,7 +33,9 @@ public class SecurityConfig {
                 )
                 .oauth2Login(oauth -> oauth
                         .userInfoEndpoint(userInfo -> userInfo
-                                .oidcUserService(customOidcUserService))
+                                .oidcUserService(customOidcUserService)
+                                .userService(customOAuth2UserService)
+                        )
                 );
         return http.build();
     }

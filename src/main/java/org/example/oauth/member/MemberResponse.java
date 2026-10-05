@@ -13,7 +13,7 @@ public record MemberResponse (
                 member.getProvider(),
                 member.getProviderId(),
                 member.getEmail(),
-                member.getName()
+                member.getNickname()
         );
     }
 }
